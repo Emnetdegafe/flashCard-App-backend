@@ -1,0 +1,37 @@
+{
+  "name": "server-template",
+  "version": "1.0.0",
+  "description": "Simple express server with sequelize, pg and jwts",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "env DELAY=1000 npx nodemon .",
+    "initdev": "npm run migrate && npm run seed",
+    "migrate": "npx sequelize-cli db:migrate",
+    "seed": "npx sequelize-cli db:seed:all",
+    "resetDB": "npx sequelize-cli db:migrate:undo:all && npm run initdev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "template",
+    "express",
+    "jwt",
+    "sequelize"
+  ],
+  "author": "Rein Op 't Land",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "pg": "^8.1.2",
+    "sequelize": "^6.2.0",
+    "sequelize-cli": "^6.0.0"
+  },
+  "devDependencies": {
+    "axios": "^0.19.2",
+    "nodemon": "^2.0.2"
+  }
+}
