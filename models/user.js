@@ -19,7 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  user.associate = function(models) {
+  user.associate = function (models) {
+    user.hasMany(models.subject)
+
     // associations can be defined here
   };
   return user;
