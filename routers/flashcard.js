@@ -67,4 +67,38 @@ router.post("/", authMiddleware, async (req, res, next) => {
 	}
 });
 
+
+
+router.put("/:id", authMiddleware, async (req, res, next) => {
+
+	const { user } = req
+	const { id } = req.params
+	const { status } = req.body
+	try {
+		const flashcard = await Flashcard.findByPk(id, {
+			include: [{
+				model: Subject,
+				include: [User]
+			}]
+		})
+
+		if (flashcard.subject.user.id !== user.id) return res.status(401).send('unauthorized to see this card')
+		// Already authorized to see this card
+
+		flashcard.status = status
+		//TODO add where:... when we have more flahscards
+
+		const flashcardInDb = await flashcard.save()
+
+		return res.send(flashcardInDb)
+
+
+	} catch (error) {
+		console.log(error);
+		return res.status(400).send({ message: "Something went wrong, sorry" });
+	}
+});
+
+
+
 module.exports = router;
