@@ -74,6 +74,7 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
 	const { user } = req
 	const { id } = req.params
 	const { status } = req.body
+	console.log('the status asked is', status)
 	try {
 		const flashcard = await Flashcard.findByPk(id, {
 			include: [{
@@ -88,9 +89,12 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
 		flashcard.status = status
 		//TODO add where:... when we have more flahscards
 
+		console.log(flashcard.status)
+
 		const flashcardInDb = await flashcard.save()
 
-		return res.send(flashcardInDb)
+		console.log(flashcardInDb.status)
+		return res.send({ flashcard: flashcardInDb })
 
 
 	} catch (error) {
