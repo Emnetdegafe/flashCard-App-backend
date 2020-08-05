@@ -48,7 +48,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
 	const { flashcard } = req.body
 	console.log('req body', req.body)
 	try {
-		const userInDb = await User.findByPk(user.id, { include: [Subject], plain: true })
+		const userInDb = await User.findByPk(user.id, { include: [Subject] })
 
 		console.log('User in DB', userInDb.subjects)
 		const subjectIds = userInDb.subjects.map(subject => subject.id)
