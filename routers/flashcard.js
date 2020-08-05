@@ -46,6 +46,8 @@ router.post("/", authMiddleware, async (req, res, next) => {
 
 	const { user } = req
 	const { flashcard } = req.body
+
+	console.log('body', req.body)
 	try {
 		const userInDb = await User.findByPk(user.id, { include: [Subject] })
 
@@ -57,7 +59,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
 
 		const flashcardInDb = await Flashcard.create(flashcard)
 
-		return res.send(flashcardInDb)
+		return res.send({ flashcard: flashcardInDb })
 
 	} catch (error) {
 		console.log(error);
