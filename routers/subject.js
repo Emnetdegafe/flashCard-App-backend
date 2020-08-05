@@ -9,8 +9,8 @@ const { SALT_ROUNDS } = require("../config/constants");
 
 const router = new Router();
 
-router.post("/:userId", authMiddleware, async (req, res, next) => {
-  const { userId } = req.params;
+router.post("/", authMiddleware, async (req, res, next) => {
+  const { user } = req;
   const { name } = req.body;
   try {
     if (!name) {
@@ -18,7 +18,7 @@ router.post("/:userId", authMiddleware, async (req, res, next) => {
     }
     const newSubject = await Subject.create({
       name,
-      userId: userId,
+      userId: user.id,
     });
     return res.status(200).send({ message: "Subject created!", newSubject });
   } catch (error) {
