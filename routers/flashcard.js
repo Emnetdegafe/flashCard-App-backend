@@ -46,17 +46,15 @@ router.post("/", authMiddleware, async (req, res, next) => {
 
 	const { user } = req
 	const { flashcard } = req.body
-	console.log('req body', req.body)
 	try {
 		const userInDb = await User.findByPk(user.id, { include: [Subject] })
 
-		console.log('User in DB', userInDb.subjects)
 		const subjectIds = userInDb.subjects.map(subject => subject.id)
-		console.log('Array of ids', subjectIds)
 
 		if (!subjectIds.includes(flashcard.subjectId)) return res.status(401).send('You are unauthorized')
 
 		// Already authorized to modify this subject
+
 		const flashcardInDb = await Flashcard.create(flashcard)
 
 		return res.send(flashcardInDb)
