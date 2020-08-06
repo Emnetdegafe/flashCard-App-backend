@@ -9,6 +9,7 @@ const { SALT_ROUNDS } = require("../config/constants");
 
 const router = new Router();
 
+
 router.post("/", authMiddleware, async (req, res, next) => {
   const { user } = req;
   const { name } = req.body;
@@ -50,7 +51,7 @@ router.get("/", authMiddleware, async (req, res, next) => {
   const { user } = req;
   try {
     const userInDb = await User.findByPk(user.id, {
-      include: [Subject],
+      include: { model: Subject, include: [Flashcard] },
     });
     return res.send(userInDb);
   } catch (error) {
