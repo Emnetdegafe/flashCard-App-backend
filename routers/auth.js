@@ -54,10 +54,31 @@ router.post("/signup", async (req, res) => {
       userId: newUser.id,
     });
 
-    const newFlashcard = await Flashcard.create({
+    await Flashcard.create({
       name: 'Or operator',
       question: 'Which of these can be used to say or?',
       answer: '||',
+      status: false,
+      subjectId: newSubject.id
+    })
+    await Flashcard.create({
+      name: 'And operator',
+      question: 'How would you say and in JS?',
+      answer: '&&',
+      status: false,
+      subjectId: newSubject.id
+    })
+    await Flashcard.create({
+      name: 'Equals one',
+      question: 'How would you check equality, not caring about dataType?',
+      answer: '==',
+      status: false,
+      subjectId: newSubject.id
+    })
+    await Flashcard.create({
+      name: 'Equals two',
+      question: 'Equal to another, also the dataType?',
+      answer: '===',
       status: false,
       subjectId: newSubject.id
     })
