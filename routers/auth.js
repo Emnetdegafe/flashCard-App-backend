@@ -3,6 +3,8 @@ const { Router } = require("express");
 const { toJWT } = require("../auth/jwt");
 const authMiddleware = require("../auth/middleware");
 const User = require("../models/").user;
+const Subject = require("../models/").subject;
+const Flashcard = require("../models/").flashcard;
 const { SALT_ROUNDS } = require("../config/constants");
 
 const router = new Router();
@@ -46,6 +48,21 @@ router.post("/signup", async (req, res) => {
       password: bcrypt.hashSync(password, SALT_ROUNDS),
       name
     });
+
+    const newSubject = await Subject.create({
+      name: 'Everything about comparison operators',
+      userId: newUser.id,
+    });
+
+    const newFlashcard = await Flashcard.create({
+      name: 'Or operator',
+      question: 'Which of these can be used to say or?',
+      answer: '||',
+      status: false,
+      subjectId: newSubject.id
+    })
+
+
 
     delete newUser.dataValues["password"]; // don't send back the password hash
 
